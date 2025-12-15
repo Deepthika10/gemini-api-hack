@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disaster Scene Commander (DSC)</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div id="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <h1>Disaster Scene Commander</h1>
+            </div>
+            <div class="status-indicator">
+                <span class="status-dot"></span>
+                <span>System Active</span>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Left Panel - Input Section -->
+            <section class="input-panel">
+                <h2><i class="fas fa-upload"></i> Field Report Submission</h2>
+                
+                <!-- Image Upload -->
+                <div class="upload-section">
+                    <label for="image-upload" class="upload-label">
+                        <div id="image-preview" class="image-preview">
+                            <i class="fas fa-camera"></i>
+                            <p>Click to capture or upload image</p>
+                        </div>
+                    </label>
+                    <input type="file" id="image-upload" accept="image/*" capture="environment" hidden>
+                </div>
+
+                <!-- Text Message Input -->
+                <div class="message-section">
+                    <label for="field-message">Situation Report:</label>
+                    <textarea id="field-message" placeholder="Describe what you see... (e.g., 'Building collapsed, people trapped on 3rd floor, smoke visible')"></textarea>
+                </div>
+
+                <!-- Location Display -->
+                <div class="location-section">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span id="location-display">Acquiring location...</span>
+                </div>
+
+                <!-- Submit Button -->
+                <button id="submit-report" class="submit-btn" disabled>
+                    <i class="fas fa-satellite-dish"></i>
+                    Analyze & Deploy Resources
+                </button>
+
+                <!-- SOS Button -->
+                <button id="sos-button" class="sos-btn">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    SOS EMERGENCY
+                </button>
+            </section>
+
+            <!-- Center Panel - Map -->
+            <section class="map-panel">
+                <div id="map"></div>
+                <div class="map-overlay" id="map-overlay">
+                    <div class="loading-spinner"></div>
+                    <p>Initializing map...</p>
+                </div>
+            </section>
+
+            <!-- Right Panel - Analysis Results -->
+            <section class="results-panel">
+                <h2><i class="fas fa-brain"></i> AI Analysis Results</h2>
+                
+                <!-- Analysis Status -->
+                <div id="analysis-status" class="analysis-status">
+                    <p>Awaiting field report...</p>
+                </div>
+
+                <!-- Disaster Assessment -->
+                <div id="disaster-assessment" class="assessment-card hidden">
+                    <h3>Disaster Assessment</h3>
+                    <div class="assessment-grid">
+                        <div class="assessment-item">
+                            <label>Type:</label>
+                            <span id="disaster-type">-</span>
+                        </div>
+                        <div class="assessment-item">
+                            <label>Severity:</label>
+                            <span id="disaster-severity" class="severity-badge">-</span>
+                        </div>
+                        <div class="assessment-item">
+                            <label>Confidence:</label>
+                            <span id="analysis-confidence">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Immediate Actions -->
+                <div id="immediate-actions" class="actions-card hidden">
+                    <h3><i class="fas fa-bolt"></i> Immediate Actions</h3>
+                    <ol id="actions-list" class="actions-list">
+                        <!-- Actions populated dynamically -->
+                    </ol>
+                </div>
+
+                <!-- Resource Deployment -->
+                <div id="resource-deployment" class="resources-card hidden">
+                    <h3><i class="fas fa-truck"></i> Resources Deployed</h3>
+                    <div id="resources-list" class="resources-list">
+                        <!-- Resources populated dynamically -->
+                    </div>
+                </div>
+
+                <!-- Alerts Log -->
+                <div id="alerts-section" class="alerts-card">
+                    <h3><i class="fas fa-bell"></i> System Alerts</h3>
+                    <div id="alerts-log" class="alerts-log">
+                        <div class="alert-item info">
+                            <span class="alert-time">--:--</span>
+                            <span class="alert-message">System initialized</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Loading Modal -->
+    <div id="loading-modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="loading-spinner large"></div>
+            <h3>Analyzing Disaster Scene...</h3>
+            <p id="loading-status">Processing multimodal input with Gemini AI...</p>
+        </div>
+    </div>
+
+    <!-- Google Maps API -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAGFzwq8gbZ3SntVfWRdQrH6PYRZjBjgSk"></script>
+    
+    <!-- Application Scripts -->
+    <script src="config.js"></script>
+    <script src="gemini-service.js"></script>
+    <script src="resource-manager.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
