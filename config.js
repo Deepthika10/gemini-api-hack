@@ -4,20 +4,21 @@
  * Central configuration file for API keys and system settings
  */
 
-const DSC_CONFIG = {
+// Attach to window for global access since this is a module now
+window.DSC_CONFIG = {
     // API Keys
-    // TODO: Replace with your actual API keys in production
-    GEMINI_API_KEY: 'AIzaSyA0mUQtD6fU0yhxWzdpqRSnWECQTo7kae8', // Get from https://makersuite.google.com/app/apikey
-    GOOGLE_MAPS_API_KEY: 'AIzaSyAGFzwq8gbZ3SntVfWRdQrH6PYRZjBjgSk',
-    GEOAPIFY_API_KEY: 'a25cbe79945f4e79948b1b83df86e468',
-    
+    // Keys are loaded from .env file via Vite
+    GEMINI_API_KEY: import.meta.env.VITE_GEMINI_API_KEY,
+    GOOGLE_MAPS_API_KEY: import.meta.env.VITE_GOOGLE_MAPS_API_KEY,
+    GEOAPIFY_API_KEY: import.meta.env.VITE_GEOAPIFY_API_KEY,
+
     // Gemini API Configuration
-    GEMINI_API_URL: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent',
-    
+    GEMINI_API_URL: 'https://generativelanguage.googleapis.com/v1beta/models/gemini-flash-latest:generateContent',
+
     // System Settings
     DEFAULT_MAP_ZOOM: 15,
     DEFAULT_LOCATION: { lat: 39.8283, lng: -98.5795 }, // Center of US as fallback
-    
+
     // Severity Levels
     SEVERITY_LEVELS: {
         CRITICAL: 'critical',
@@ -25,7 +26,7 @@ const DSC_CONFIG = {
         MEDIUM: 'medium',
         LOW: 'low'
     },
-    
+
     // Resource Types
     RESOURCE_TYPES: {
         FIRE_TRUCK: { name: 'Fire Truck', icon: 'fa-fire-extinguisher', color: '#d32f2f' },
@@ -36,7 +37,7 @@ const DSC_CONFIG = {
         HELICOPTER: { name: 'Med Helicopter', icon: 'fa-helicopter', color: '#00897b' },
         UTILITY: { name: 'Utility Crew', icon: 'fa-hard-hat', color: '#ffc107' }
     },
-    
+
     // Disaster Type Mappings
     DISASTER_TYPES: {
         FIRE: 'fire',
@@ -53,7 +54,7 @@ const DSC_CONFIG = {
 };
 
 // Freeze configuration to prevent accidental modifications
-Object.freeze(DSC_CONFIG);
-Object.freeze(DSC_CONFIG.SEVERITY_LEVELS);
-Object.freeze(DSC_CONFIG.RESOURCE_TYPES);
-Object.freeze(DSC_CONFIG.DISASTER_TYPES);
+Object.freeze(window.DSC_CONFIG);
+Object.freeze(window.DSC_CONFIG.SEVERITY_LEVELS);
+Object.freeze(window.DSC_CONFIG.RESOURCE_TYPES);
+Object.freeze(window.DSC_CONFIG.DISASTER_TYPES);

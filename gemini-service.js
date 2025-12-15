@@ -19,7 +19,7 @@ class GeminiService {
      */
     async analyzeDisasterScene(imageBase64, textMessage, location) {
         const prompt = this.buildAnalysisPrompt(textMessage, location);
-        
+
         const requestBody = {
             contents: [
                 {
@@ -128,26 +128,26 @@ RESPONSE FORMAT (respond ONLY with valid JSON, no other text):
         try {
             // Extract text content from Gemini response
             const textContent = data.candidates?.[0]?.content?.parts?.[0]?.text;
-            
+
             if (!textContent) {
                 throw new Error('No content in Gemini response');
             }
 
             // Extract JSON from response (handle potential markdown formatting)
             let jsonString = textContent;
-            
+
             // Remove markdown code blocks if present
             const jsonMatch = textContent.match(/```(?:json)?\s*([\s\S]*?)```/);
             if (jsonMatch) {
                 jsonString = jsonMatch[1];
             }
-            
+
             // Parse JSON
             const analysis = JSON.parse(jsonString.trim());
-            
+
             // Validate required fields
             this.validateAnalysis(analysis);
-            
+
             return analysis;
 
         } catch (error) {
@@ -162,7 +162,7 @@ RESPONSE FORMAT (respond ONLY with valid JSON, no other text):
      */
     validateAnalysis(analysis) {
         const requiredFields = ['disaster_type', 'severity', 'immediate_actions'];
-        
+
         for (const field of requiredFields) {
             if (!analysis[field]) {
                 throw new Error(`Missing required field: ${field}`);
@@ -248,5 +248,5 @@ Respond with the same JSON structure as a full analysis, but note lower confiden
     }
 }
 
-// Create global instance
-const geminiService = new GeminiService();
+// Create global instance attached to window for module access
+window.geminiService = new GeminiService();

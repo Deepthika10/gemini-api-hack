@@ -44,7 +44,7 @@ class ResourceManager {
 
         // Determine resources based on disaster type
         const resourceTypes = this.getRequiredResources(analysis);
-        
+
         // Deploy each resource
         for (const resourceType of resourceTypes) {
             const resource = this.deployResource(resourceType, location, analysis.severity);
@@ -52,7 +52,7 @@ class ResourceManager {
         }
 
         // Add helicopter for critical situations with casualties
-        if (analysis.severity === 'critical' && 
+        if (analysis.severity === 'critical' &&
             (analysis.estimated_casualties?.injured > 0 || analysis.estimated_casualties?.trapped > 0)) {
             const helicopter = this.deployResource('HELICOPTER', location, 'critical');
             deployment.resources.push(helicopter);
@@ -60,7 +60,7 @@ class ResourceManager {
 
         // Generate alerts
         deployment.alerts = this.generateAlerts(analysis, deployment.resources);
-        
+
         // Store deployment
         this.deployedResources = deployment.resources;
         this.alerts = deployment.alerts;
@@ -86,11 +86,11 @@ class ResourceManager {
         // Add resources based on specific hazards
         if (analysis.hazards_identified) {
             const hazards = analysis.hazards_identified.join(' ').toLowerCase();
-            
+
             if (hazards.includes('chemical') || hazards.includes('toxic') || hazards.includes('gas')) {
                 if (!resources.includes('HAZMAT')) resources.push('HAZMAT');
             }
-            
+
             if (hazards.includes('electric') || hazards.includes('power') || hazards.includes('utility')) {
                 if (!resources.includes('UTILITY')) resources.push('UTILITY');
             }
@@ -104,7 +104,7 @@ class ResourceManager {
      */
     deployResource(resourceType, location, severity) {
         const resourceConfig = DSC_CONFIG.RESOURCE_TYPES[resourceType];
-        
+
         if (!resourceConfig) {
             console.warn(`Unknown resource type: ${resourceType}`);
             return null;
@@ -262,5 +262,5 @@ class ResourceManager {
     }
 }
 
-// Create global instance
-const resourceManager = new ResourceManager();
+// Create global instance attached to window for module access
+window.resourceManager = new ResourceManager();
